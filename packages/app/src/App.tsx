@@ -34,9 +34,13 @@ import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
-//import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { ChatGPTFrontendPage } from '@enfuse/chatgpt-plugin-frontend';
 import { SignInPage } from '@backstage/core-components';
 import { providers } from './components/singnin/Providers';
+import LightIcon from '@material-ui/icons/WbSunny';
+import { UnifiedThemeProvider } from '@backstage/theme';
+import { myTheme } from './theme/myTheme';
+
 
 
 const app = createApp({
@@ -50,6 +54,15 @@ const app = createApp({
       />
     ),
   },
+  themes: [{
+    id: 'my-theme',
+    title: 'My Custom Theme',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={myTheme} children={children} />
+    )
+  }],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
@@ -107,6 +120,7 @@ const routes = (
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
+    <Route path="/chatgpt" element={<ChatGPTFrontendPage />} />
   </FlatRoutes>
 );
 
